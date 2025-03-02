@@ -2,6 +2,9 @@ package main
 
 import (
 	"strings"
+	"time"
+
+	"github.com/arturogood17/pokedex/internal/pokeapi"
 )
 
 func cleanInput(text string) []string {
@@ -13,5 +16,6 @@ func cleanInput(text string) []string {
 }
 
 func main() {
-	startREPL()
+	c := pokeapi.NewClient(5 * time.Second)
+	startREPL(c)
 }

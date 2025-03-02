@@ -4,10 +4,19 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+
+	"github.com/arturogood17/pokedex/internal/pokeapi"
 )
 
-func startREPL() {
+func startREPL(c *pokeapi.Client) {
 	scanner := bufio.NewScanner(os.Stdin)
+
+	cfg := &config{
+		Clnt:        c,
+		nextURL:     "",
+		previousURL: nil,
+	}
+
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
@@ -16,7 +25,7 @@ func startREPL() {
 		command := words[0]
 		v, ok := getCommands()[command]
 		if ok {
-			err := v.callback() //the callback func always returns an err you have to catch
+			err := v.callback(cfg) //the callback func always returns an err you have to catch
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -28,10 +37,16 @@ func startREPL() {
 	}
 }
 
+type config struct {
+	Clnt        *pokeapi.Client
+	nextURL     string
+	previousURL *string
+}
+
 type cliCommand struct {
 	name        string
 	description string
-	callback    func() error
+	callback    func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -45,6 +60,16 @@ func getCommands() map[string]cliCommand {
 			name:        "help",
 			description: "Displays a help message",
 			callback:    HelpCommand,
+		},
+		"map": {
+			name:        "map",
+			description: "Shows list of locations",
+			callback:    MapCommand,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Shows previous list of locations",
+			callback:    MapbCommand,
 		},
 	}
 	return commands
