@@ -16,6 +16,10 @@ func cleanInput(text string) []string {
 }
 
 func main() {
-	c := pokeapi.NewClient(5 * time.Second)
-	startREPL(c)
+
+	pokeClient := pokeapi.NewClient(5 * time.Second)
+	cfg := &config{
+		pokeClient: pokeClient,
+	}
+	startREPL(cfg)
 }
