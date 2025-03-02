@@ -5,9 +5,8 @@ import (
 	"time"
 )
 
-type Client struct {
+type Client struct { // http.Client ya tiene timeout
 	HttpClient http.Client
-	Timeout    time.Duration
 }
 
 func NewClient(timeout time.Duration) *Client {
