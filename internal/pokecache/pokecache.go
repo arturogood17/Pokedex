@@ -24,7 +24,7 @@ func NewCache(interval time.Duration) Cache {
 	return nc
 }
 
-func (ch *Cache) Add(key string, value []byte) {
+func (ch *Cache) Add(key string, value []byte) { //Agrega los valores en []byte al mapa
 	ch.mu.Lock()
 	defer ch.mu.Unlock()
 	ch.cache[key] = cacheEntry{
@@ -33,8 +33,8 @@ func (ch *Cache) Add(key string, value []byte) {
 	}
 }
 
-func (ch *Cache) Get(key string) ([]byte, bool) {
-	ch.mu.Lock()
+func (ch *Cache) Get(key string) ([]byte, bool) { //Usas esto para devolver los valores porque Ch.cache es privado
+	ch.mu.Lock() //porque la c de cache es minúscula :|
 	defer ch.mu.Unlock()
 	v, exists := ch.cache[key]
 	return v.val, exists
