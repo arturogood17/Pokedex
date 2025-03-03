@@ -7,6 +7,10 @@ import (
 )
 
 func (c *Client) ListLocation(pageURL *string) (LocationArea, error) {
+	if v, exists := c.cache.cache[pageURL]; exists {
+		return v
+	}
+
 	url := baseURL + "location-area"
 	if pageURL != nil {
 		url = *pageURL
