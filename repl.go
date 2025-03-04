@@ -17,7 +17,7 @@ type config struct {
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, ...string) error
 }
 
 func startREPL(cfg *config) {
@@ -29,9 +29,13 @@ func startREPL(cfg *config) {
 		input := scanner.Text()
 		words := cleanInput(input)
 		command := words[0]
+		var scmd string
+		if len(words) > 1 {
+			scmd = words[1]
+		}
 		v, ok := getCommands()[command]
 		if ok {
-			err := v.callback(cfg) //the callback func always returns an err you have to catch
+			err := v.callback(cfg, scmd) //the callback func always returns an err you have to catch
 			if err != nil {
 				fmt.Println(err)
 			}
