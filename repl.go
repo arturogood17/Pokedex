@@ -29,14 +29,14 @@ func startREPL(cfg *config) {
 		input := scanner.Text()
 		words := cleanInput(input)
 		command := words[0]
-		var scmd string
+		var scmd []string
 		if len(words) > 1 {
-			scmd = words[1]
+			scmd = words[1:]
 		}
 		v, ok := getCommands()[command]
 		if ok {
-			err := v.callback(cfg, scmd) //the callback func always returns an err you have to catch
-			if err != nil {
+			err := v.callback(cfg, scmd...) //the callback func always returns an err you have to catch. You need to add
+			if err != nil {                 //the ... for it to accept the commands
 				fmt.Println(err)
 			}
 			continue
@@ -70,8 +70,14 @@ func getCommands() map[string]cliCommand {
 			callback:    MapbCommand,
 		},
 		"explore": {
-			name:        "explore",
-			description: "Shows all the pokemons in a specific area",
+			name:        "explore <location_name>",
+			description: "Explore a location",
+			callback:    ExploreCommand,
+		},
+
+		"catch": {
+			name:        "catch <location_name>",
+			description: "Explore a location",
 			callback:    ExploreCommand,
 		},
 	}
