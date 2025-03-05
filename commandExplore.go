@@ -6,12 +6,12 @@ import (
 )
 
 func ExploreCommand(cfg *config, areas ...string) error {
-	if len(areas) == 0 {
-		return errors.New("area needed")
+	if len(areas) != 0 {
+		return errors.New("provide a location name")
 	}
 	area := areas[0]
 
-	area_poke, err := cfg.pokeClient.AreaPokemon(&area)
+	area_poke, err := cfg.pokeClient.AreaPokemon(area)
 	if err != nil {
 		return err
 	}
