@@ -2,17 +2,12 @@ package pokeapi
 
 import (
 	"encoding/json"
-	"errors"
 	"io"
 	"net/http"
 )
 
-func (c *Client) AreaPokemon(area *string) (Area, error) {
-	if area == nil {
-		return Area{}, errors.New("no valid area provided")
-	}
-
-	url := baseURL + "location-area/" + *area
+func (c *Client) AreaPokemon(area string) (Area, error) {
+	url := baseURL + "location-area/" + area
 
 	var PokemonList Area
 	if v, exists := c.cache.Get(url); exists {
@@ -32,6 +27,7 @@ func (c *Client) AreaPokemon(area *string) (Area, error) {
 		return Area{}, err
 	}
 	defer res.Body.Close()
+
 	data, err := io.ReadAll(res.Body)
 	if err != nil {
 		return Area{}, err
