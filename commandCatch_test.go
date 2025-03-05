@@ -14,15 +14,15 @@ func TestCommandCatch(t *testing.T) {
 		expected error
 	}{
 		{
-			input:    "Boltund",
+			input:    "Charmander",
 			expected: nil,
 		},
 		{
-			input:    "Nosepass",
+			input:    "Sandshrew",
 			expected: nil,
 		},
 		{
-			input:    "Stantler",
+			input:    "Marowak",
 			expected: nil,
 		},
 		{
