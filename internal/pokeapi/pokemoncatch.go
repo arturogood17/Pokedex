@@ -7,7 +7,7 @@ import (
 )
 
 func (c *Client) PokemonCatch(name string) (Pokemon, error) {
-	url := baseURL + "pokemon" + name
+	url := baseURL + "pokemon/" + name
 
 	var Poke Pokemon
 	if val, exists := c.cache.Get(url); exists {
