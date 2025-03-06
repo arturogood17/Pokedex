@@ -9,9 +9,10 @@ import (
 )
 
 type config struct {
-	pokeClient  pokeapi.Client
-	nextURL     *string
-	previousURL *string
+	pokeClient    pokeapi.Client
+	nextURL       *string
+	previousURL   *string
+	caughtPokemon map[string]pokeapi.Pokemon
 }
 
 type cliCommand struct {
@@ -76,8 +77,8 @@ func getCommands() map[string]cliCommand {
 		},
 
 		"catch": {
-			name:        "catch <location_name>",
-			description: "Explore a location",
+			name:        "catch <pokemon_name>",
+			description: "Attempt to catch a pokemon",
 			callback:    CatchCommand,
 		},
 	}
