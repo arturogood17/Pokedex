@@ -18,7 +18,7 @@ func CatchCommand(c *config, cmds ...string) error {
 	}
 	res := rand.Intn(pokemon.BaseExperience)
 
-	fmt.Printf("Throwing a Pokeball at %s\n", pokemon.Name)
+	fmt.Printf("Throwing a Pokeball at %s...\n", pokemon.Name)
 	if res > 40 { //why 40? We'll never know!
 		fmt.Printf("%s escaped!\n", pokemon.Name)
 		return nil
